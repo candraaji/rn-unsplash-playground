@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import axios from 'axios';
 import SearchBar from '../components/SearchBar';
 import {useEffect, useState} from 'react';
 import ListCard from '../components/ListCard';
@@ -38,15 +37,17 @@ const HomeScreen = () => {
     };
   }, []);
 
-  const onSearchPress = () => {
+  const onSearchPress = async () => {
     Keyboard.dismiss();
     if (!search) return Alert.alert('No Input', 'What do you want to search?');
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
-
-    console.log(search);
+    const response = await ApiManager.get(
+      `search/photos?page=1&query=` + search,
+    );
+    setIsLoading(false);
+    if (response.status === 200 && response.data?.results.length > 0) {
+      setDataPicture(response.data?.results);
+    }
   };
 
   return (
@@ -58,7 +59,7 @@ const HomeScreen = () => {
           buttonActionLoading={isLoading}
         />
       </View>
-      {isLoading && dataPicture ? (
+      {isLoading ? (
         <View className="flex flex-1 justify-center items-center">
           <ActivityIndicator color={APP_COLOR.PRIMARY} size={'large'} />
         </View>

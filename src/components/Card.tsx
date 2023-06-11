@@ -1,4 +1,6 @@
 import {Text, View} from 'react-native';
+import Lightbox from 'react-native-lightbox-v2';
+import Share from 'react-native-share';
 import Image from './Image';
 import PersonalIcon from 'src/assets/icons/Personal';
 import LoveIcon from 'src/assets/icons/Love';
@@ -10,11 +12,26 @@ const Card: React.FC<UnsplashData> = ({unsplashData}) => {
       <Text className="text-center ml-2 mr-2 mt-2 text-md font-semibold text-slate-600 text-md">
         {unsplashData.alt_description}
       </Text>
-      <Image
-        uri={unsplashData.urls.thumb}
-        className="w-40 h-32 rounded-lg mt-4 shadow-lg"
-        resizeMode="cover"
-      />
+      <Lightbox
+        springConfig={{tension: 15, friction: 7}}
+        swipeToDismiss={false}
+        underlayColor="white"
+        renderContent={() => (
+          <View>
+            <Image
+              uri={unsplashData.urls.thumb}
+              className="w-full h-full rounded-lg mt-4 shadow-lg"
+              resizeMode="contain"
+            />
+          </View>
+        )}>
+        <Image
+          key={unsplashData.id}
+          uri={unsplashData.urls.thumb}
+          className="w-40 h-32 rounded-lg mt-4 shadow-lg"
+          resizeMode="cover"
+        />
+      </Lightbox>
 
       <View className="ml-2 flex flex-row text-center mt-3 flex-wrap ">
         {unsplashData.description ? (
