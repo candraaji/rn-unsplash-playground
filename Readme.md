@@ -2,6 +2,9 @@ How to Install
 
 `npm install`
 
+COPY .env.example to .env
+add your unsplash api key
+
 How to Run
 
 `npm start`
