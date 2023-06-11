@@ -23,7 +23,7 @@ const Card: React.FC<UnsplashData> = ({unsplashData}) => {
     }
   };
   return (
-    <View className="pl-1 pr-1 m-1 w-[180px] relative h-[300px] pb-2 border bg-slate-50 border-slate-300 shadow-sm rounded-lg items-center">
+    <View className="pl-1 pr-1 m-1 max-w-[170px] relative h-[300px] pb-2 border bg-slate-50 border-slate-300 shadow-sm rounded-lg items-center">
       <Text className="text-center ml-2 mr-2 mt-2 text-md font-semibold text-slate-600 text-md">
         {unsplashData.alt_description}
       </Text>
