@@ -5,8 +5,23 @@ import Image from './Image';
 import PersonalIcon from 'src/assets/icons/Personal';
 import LoveIcon from 'src/assets/icons/Love';
 import {UnsplashData} from 'src/types/Unsplash';
+import ShareIcon from 'src/assets/icons/Share';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Card: React.FC<UnsplashData> = ({unsplashData}) => {
+  const handleShare = async () => {
+    const shareOptions = {
+      title: unsplashData.alt_description,
+      url: unsplashData.urls.full,
+      failOnCancel: false,
+    };
+
+    try {
+      await Share.open(shareOptions);
+    } catch (error) {
+      console.log('Error =>', error);
+    }
+  };
   return (
     <View className="pl-1 pr-1 m-1 w-[180px] relative h-[300px] pb-2 border bg-slate-50 border-slate-300 shadow-sm rounded-lg items-center">
       <Text className="text-center ml-2 mr-2 mt-2 text-md font-semibold text-slate-600 text-md">
@@ -58,6 +73,11 @@ const Card: React.FC<UnsplashData> = ({unsplashData}) => {
             <Text className="text-slate-500 text-xs font-light">
               {unsplashData.likes || 0}
             </Text>
+          </View>
+          <View className="mt-1 ml-1">
+            <TouchableOpacity onPress={handleShare}>
+              <ShareIcon />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
